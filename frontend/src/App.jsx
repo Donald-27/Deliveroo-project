@@ -1,48 +1,27 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
-import TrackParcel from "./pages/TrackParcel";
-import BookDelivery from "./pages/BookDelivery";
-import SavedAddresses from "./pages/SavedAddresses";
-import Templates from "./pages/Templates";
-import ScheduleDelivery from "./pages/ScheduleDelivery";
-import QRReceipt from "./pages/QRReceipt";
-import Referrals from "./pages/Referrals";
-import BulkBooking from "./pages/BulkBooking";
-import EcoMode from "./pages/EcoMode";
-import LiveCourier from "./pages/LiveCourier";
-import Alerts from "./pages/Alerts";
-import Performance from "./pages/Performance";
-import ReportIncident from "./pages/ReportIncident";
-import SmartAssign from "./pages/SmartAssign";
-import Layout from "./components/Layout";
+import { Routes, Route } from "react-router-dom";
+import AppRoutes from "./routes/AppRoutes";
+import "./App.css"; // Optional for custom styles
+import "tailwindcss/tailwind.css";
 
-export default function App() {
+const App = () => {
   return (
-    <Router>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/track" element={<TrackParcel />} />
-          <Route path="/book" element={<BookDelivery />} />
-          <Route path="/addresses" element={<SavedAddresses />} />
-          <Route path="/templates" element={<Templates />} />
-          <Route path="/schedule" element={<ScheduleDelivery />} />
-          <Route path="/receipt" element={<QRReceipt />} />
-          <Route path="/referrals" element={<Referrals />} />
-          <Route path="/bulk" element={<BulkBooking />} />
-          <Route path="/eco" element={<EcoMode />} />
-          <Route path="/live" element={<LiveCourier />} />
-          <Route path="/alerts" element={<Alerts />} />
-          <Route path="/performance" element={<Performance />} />
-          <Route path="/incident" element={<ReportIncident />} />
-          <Route path="/assign" element={<SmartAssign />} />
-        </Routes>
-      </Layout>
-    </Router>
+    <div className="min-h-screen w-full bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] text-white font-sans">
+      <div className="relative z-10">
+        <AppRoutes />
+      </div>
+
+      {/* Background visual effect */}
+      <div
+        className="fixed top-0 left-0 w-full h-full z-0"
+        style={{
+          background: "radial-gradient(circle at 20% 40%, rgba(255,255,255,0.04), transparent 70%)",
+          maskImage: "radial-gradient(ellipse at center, black 40%, transparent 100%)",
+          WebkitMaskImage: "radial-gradient(ellipse at center, black 40%, transparent 100%)"
+        }}
+      />
+    </div>
   );
-}
+};
+
+export default App;

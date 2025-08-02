@@ -1,9 +1,12 @@
-import React from "react";
+import React from 'react';
 
-const Loader = () => {
+const Loader = ({ size = 24 }) => {
   return (
-    <div className="flex items-center justify-center h-40">
-      <div className="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
+    <div className="flex justify-center items-center py-4">
+      <div
+        style={{ width: size, height: size }}
+        className="border-4 border-t-indigo-500 border-gray-300 rounded-full animate-spin"
+      ></div>
     </div>
   );
 };

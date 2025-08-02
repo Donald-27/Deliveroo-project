@@ -1,25 +1,25 @@
-import React from "react";
+import React from 'react';
+import { FaCheckCircle } from 'react-icons/fa';
 
-const steps = ["Dispatched", "In Transit", "Out for Delivery", "Delivered"];
-
-const Timeline = ({ status }) => {
-  const currentStep = steps.indexOf(status);
-
+const Timeline = ({ steps, current }) => {
   return (
-    <div className="flex justify-between items-center mt-4">
-      {steps.map((step, index) => (
-        <div key={step} className="flex-1 text-center">
-          <div
-            className={`w-8 h-8 mx-auto rounded-full border-2 ${
-              index <= currentStep ? "bg-blue-600 border-blue-600 text-white" : "border-gray-300"
-            } flex items-center justify-center text-sm font-bold`}
+    <ol className="relative border-l border-indigo-400 ml-3 mt-4">
+      {steps.map((step, idx) => (
+        <li key={idx} className="mb-6 ml-6">
+          <span
+            className={`absolute -left-3 flex items-center justify-center w-6 h-6 rounded-full ring-4 ${
+              idx <= current
+                ? 'bg-indigo-500 ring-indigo-300'
+                : 'bg-gray-400 ring-gray-300'
+            }`}
           >
-            {index + 1}
-          </div>
-          <p className="text-xs mt-1">{step}</p>
-        </div>
+            <FaCheckCircle className="text-white text-xs" />
+          </span>
+          <h4 className="font-semibold text-white">{step.title}</h4>
+          <p className="text-sm text-gray-400">{step.description}</p>
+        </li>
       ))}
-    </div>
+    </ol>
   );
 };
 

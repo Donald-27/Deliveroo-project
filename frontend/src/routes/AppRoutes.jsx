@@ -1,51 +1,37 @@
-import React, { useEffect } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchUser } from "../redux/slices/authSlice";
-import Home from "../pages/Home";
-import Login from "../pages/Login";
-import Dashboard from "../pages/Dashboard";
-import TrackParcel from "../pages/TrackParcel";
-import CreateDelivery from "../pages/CreateDelivery";
-import AdminPanel from "../pages/AdminPanel";
-import Profile from "../pages/Profile";
+// frontend/src/routes/AppRoutes.jsx
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import {
+  Home, Login, Dashboard, CreateDelivery, TrackParcel, AdminPanel, Profile,
+  BookDelivery, SavedAddresses, Templates, ScheduleDelivery, QRReceipt, Referrals,
+  BulkBooking, EcoMode, LiveCourier, Alerts, Performance, ReportIncident, SmartAssign,
+} from "../pages";
 
-const PrivateRoute = ({ children }) => {
-  const { token } = useSelector((state) => state.auth);
-  return token ? children : <Navigate to="/login" />;
-};
-
-export default function AppRoutes() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchUser());
-  }, [dispatch]);
-
+const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
-
-      <Route path="/dashboard" element={
-        <PrivateRoute><Dashboard /></PrivateRoute>
-      } />
-
-      <Route path="/track/:trackingId" element={<TrackParcel />} />
-
-      <Route path="/create-delivery" element={
-        <PrivateRoute><CreateDelivery /></PrivateRoute>
-      } />
-
-      <Route path="/admin" element={
-        <PrivateRoute><AdminPanel /></PrivateRoute>
-      } />
-
-      <Route path="/profile" element={
-        <PrivateRoute><Profile /></PrivateRoute>
-      } />
-
-      <Route path="*" element={<Navigate to="/" />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/create" element={<CreateDelivery />} />
+      <Route path="/track" element={<TrackParcel />} />
+      <Route path="/admin" element={<AdminPanel />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/book" element={<BookDelivery />} />
+      <Route path="/saved" element={<SavedAddresses />} />
+      <Route path="/templates" element={<Templates />} />
+      <Route path="/schedule" element={<ScheduleDelivery />} />
+      <Route path="/qr" element={<QRReceipt />} />
+      <Route path="/referrals" element={<Referrals />} />
+      <Route path="/bulk" element={<BulkBooking />} />
+      <Route path="/eco" element={<EcoMode />} />
+      <Route path="/live" element={<LiveCourier />} />
+      <Route path="/alerts" element={<Alerts />} />
+      <Route path="/performance" element={<Performance />} />
+      <Route path="/incident" element={<ReportIncident />} />
+      <Route path="/smartassign" element={<SmartAssign />} />
     </Routes>
   );
-}
+};
+
+export default AppRoutes;

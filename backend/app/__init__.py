@@ -1,48 +1,32 @@
+import os
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_jwt_extended import JWTManager
-from flask_mail import Mail
-from flask_migrate import Migrate
 from flask_cors import CORS
-from .config import Config
+from .database import db
+from flask_jwt_extended import JWTManager
+from .routes.auth_routes import auth_bp
+from .routes.parcel_routes import parcel_bp
+from .routes.admin_routes import admin_bp
+from .routes.utils_routes import utils_bp
+from config import Config
 
-# Initialize extensions
-db = SQLAlchemy()
 jwt = JWTManager()
-mail = Mail()
-migrate = Migrate()
 
-def create_app(config_class=Config):
-    app = Flask(__name__, static_folder="../frontend/dist", static_url_path="/")
-    app.config.from_object(config_class)
-
-    CORS(app, resources={r"/api/*": {"origins": "*"}})
-
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object(Config)
     db.init_app(app)
     jwt.init_app(app)
-    mail.init_app(app)
-    migrate.init_app(app, db)
+    CORS(app)
 
-    # Register blueprints
-    from .routes.auth       import auth_bp
-    from .routes.parcel     import parcel_bp
-    from .routes.tracking   import tracking_bp
-    from .routes.referrals  import referrals_bp
-    from .routes.templates  import templates_bp
-    from .routes.courier    import courier_bp
-    from .routes.admin      import admin_bp
+    # create upload folder
+    os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
-    app.register_blueprint(auth_bp,       url_prefix="/api/auth")
-    app.register_blueprint(parcel_bp,     url_prefix="/api/parcels")
-    app.register_blueprint(tracking_bp,   url_prefix="/api/tracking")
-    app.register_blueprint(referrals_bp,  url_prefix="/api/referrals")
-    app.register_blueprint(templates_bp,  url_prefix="/api/templates")
-    app.register_blueprint(courier_bp,    url_prefix="/api/courier")
-    app.register_blueprint(admin_bp,      url_prefix="/api/admin")
+    app.register_blueprint(auth_bp, url_prefix='/api/auth')
+    app.register_blueprint(parcel_bp, url_prefix='/api/parcels')
+    app.register_blueprint(admin_bp, url_prefix='/api/admin')
+    app.register_blueprint(utils_bp, url_prefix='/api/utils')
 
-    @app.route("/", defaults={"path": ""})
-    @app.route("/<path:path>")
-    def serve_frontend(path):
-        return app.send_static_file("index.html")
+    with app.app_context():
+        db.create_all()
 
     return app
