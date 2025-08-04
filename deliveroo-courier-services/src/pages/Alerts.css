@@ -1,0 +1,48 @@
+.alerts-page {
+  padding: 4rem 2rem;
+  background: linear-gradient(to bottom right, #fff7f0, #ffe4d6);
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.alerts-page h1 {
+  font-size: 2.5rem;
+  color: #9d174d;
+  margin-bottom: 2rem;
+}
+
+.alerts-list {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.alert-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+}
+
+.alert-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.alert-type {
+  font-weight: bold;
+  color: #1f2937;
+}
+
+.alert-time {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.alert-card.delay {
+  border-left: 4px solid #f59e0b;
+}
+
+.alert-card.weather {
+  border-left: 4px solid #3b82f6;
+}

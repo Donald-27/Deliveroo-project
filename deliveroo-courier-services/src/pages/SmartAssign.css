@@ -1,0 +1,105 @@
+/* src/pages/smartassign.css */
+.smartassign-container {
+  padding: 50px;
+  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+  color: #ffffff;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  animation: fadeIn 2s ease;
+}
+
+.smartassign-title {
+  font-size: 2.8rem;
+  margin-bottom: 30px;
+  background: linear-gradient(to right, #00c6ff, #0072ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  animation: slideDown 1s ease;
+}
+
+.panels-wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.panel {
+  flex: 1;
+  min-width: 300px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(15px);
+  animation: fadeInUp 1.2s ease;
+  transition: transform 0.3s ease;
+}
+
+.panel:hover {
+  transform: translateY(-5px);
+}
+
+.panel h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #66ffcc;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 10px;
+}
+
+.panel ul {
+  list-style: none;
+  padding: 0;
+}
+
+.panel li {
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.panel li:last-child {
+  border-bottom: none;
+}
+
+.footer-note {
+  margin-top: 40px;
+  font-size: 1rem;
+  text-align: center;
+  color: #dddddd;
+  opacity: 0.8;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-60px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

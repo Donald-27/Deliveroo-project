@@ -1,0 +1,77 @@
+.quote-container {
+  background: linear-gradient(to right, #f8f8f8, #fff);
+  border-radius: 10px;
+  padding: 40px;
+  max-width: 700px;
+  margin: 60px auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+}
+
+.quote-container h2 {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.quote-container p {
+  font-size: 16px;
+  margin-bottom: 30px;
+}
+
+.quote-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.input-group input,
+.input-group select {
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+}
+
+.calculate-btn {
+  background-color: #ffcb05;
+  color: #000;
+  border: none;
+  padding: 14px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.calculate-btn:hover {
+  background-color: #f1b800;
+}
+
+.quote-result {
+  margin-top: 25px;
+  background-color: #e8ffe8;
+  padding: 20px;
+  border: 1px solid #b6ffb6;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.quote-price {
+  font-size: 28px;
+  font-weight: 800;
+  color: #27ae60;
+  margin-top: 10px;
+}

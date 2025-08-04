@@ -2,23 +2,28 @@ import jwt
 from datetime import datetime, timedelta
 from flask import request, jsonify
 from functools import wraps
+import os
 
-# SECRET_KEY should ideally come from an environment variable
-SECRET_KEY = "your_jwt_secret_key"
+SECRET_KEY = os.getenv("JWT_SECRET_KEY", "your_jwt_secret_key")
 
-def encode_token(payload, exp_minutes=60):
+def generate_token(user_id, role=None, exp_minutes=60):
     """
-    Encode the payload into a JWT token with an expiry.
+    Generate a JWT token with user ID and optional role.
     """
-    payload["exp"] = datetime.utcnow() + timedelta(minutes=exp_minutes)
+    payload = {
+        "sub": user_id,
+        "role": role,
+        "exp": datetime.utcnow() + timedelta(minutes=exp_minutes)
+    }
     return jwt.encode(payload, SECRET_KEY, algorithm="HS256")
 
 def decode_token(token):
     """
-    Decode the JWT token. Returns payload if valid, else None.
+    Decode the JWT token and return the payload if valid.
     """
     try:
-        return jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+        decoded = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+        return decoded
     except jwt.ExpiredSignatureError:
         return None
     except jwt.InvalidTokenError:
@@ -26,28 +31,36 @@ def decode_token(token):
 
 def token_required(f):
     """
-    Decorator to protect routes that require authentication.
-    Validates JWT from the Authorization header.
+    Decorator to protect routes with JWT authentication.
+    Attaches `request.user` containing decoded payload.
     """
     @wraps(f)
     def decorated(*args, **kwargs):
-        token = None
-
-        if "Authorization" in request.headers:
-            auth_header = request.headers["Authorization"]
-            if auth_header.startswith("Bearer "):
-                token = auth_header.split(" ")[1]
+        auth_header = request.headers.get("Authorization", "")
+        token = auth_header.split(" ")[1] if auth_header.startswith("Bearer ") else None
 
         if not token:
             return jsonify({"error": "Token is missing"}), 401
 
-        try:
-            data = decode_token(token)
-            if data is None:
-                return jsonify({"error": "Invalid or expired token"}), 401
-            request.user = data  # Attach decoded token to request
-        except Exception:
-            return jsonify({"error": "Token processing failed"}), 401
+        payload = decode_token(token)
+        if not payload:
+            return jsonify({"error": "Invalid or expired token"}), 401
 
+        request.user = payload
         return f(*args, **kwargs)
     return decorated
+
+def role_required(allowed_roles):
+    """
+    Optional decorator to restrict access by user role.
+    Usage: @role_required(["admin", "courier"])
+    """
+    def wrapper(f):
+        @wraps(f)
+        def decorated(*args, **kwargs):
+            user = getattr(request, "user", None)
+            if not user or user.get("role") not in allowed_roles:
+                return jsonify({"error": "Unauthorized role"}), 403
+            return f(*args, **kwargs)
+        return decorated
+    return wrapper

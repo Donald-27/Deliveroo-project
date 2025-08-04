@@ -1,0 +1,45 @@
+
+.receipt-page {
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #fef9ff, #ecedef);
+  padding: 4rem 2rem;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.receipt-card {
+  background: white;
+  max-width: 600px;
+  margin: auto;
+  padding: 3rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.receipt-card h1 {
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  color: #3f3f46;
+}
+
+.receipt-card p {
+  margin: 8px 0;
+  color: #4b5563;
+  font-size: 1rem;
+}
+
+.print-btn {
+  margin-top: 2rem;
+  padding: 0.8rem 2rem;
+  background: #4b5563;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.print-btn:hover {
+  background: #374151;
+}

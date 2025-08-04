@@ -1,5 +1,4 @@
 from flask import Blueprint
-from routes.auth_routes import auth_bp
 from routes.parcel_routes import parcel_bp
 from routes.admin_routes import admin_bp
 

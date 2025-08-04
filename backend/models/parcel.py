@@ -1,7 +1,5 @@
-from flask_sqlalchemy import SQLAlchemy
+from extensions import db
 from datetime import datetime
-
-db = SQLAlchemy()
 
 class Parcel(db.Model):
     __tablename__ = 'parcels'
@@ -20,6 +18,10 @@ class Parcel(db.Model):
     delivery_time = db.Column(db.String(50), nullable=True)
     qr_code_path = db.Column(db.String(255), nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    current_location = db.Column(db.String(255), nullable=True)
+    courier_name = db.Column(db.String(100))
+    estimated_delivery = db.Column(db.String(50))
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     def to_dict(self):
         return {
@@ -36,5 +38,6 @@ class Parcel(db.Model):
             'courier_id': self.courier_id,
             'delivery_time': self.delivery_time,
             'qr_code_path': self.qr_code_path,
-            'created_at': self.created_at.strftime('%Y-%m-%d %H:%M:%S')
+            'created_at': self.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+            'current_location': self.current_location or "In Transit"
         }

@@ -1,0 +1,58 @@
+.live-map-page {
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #f0f8ff, #e6f7ff);
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.map-header h1 {
+  font-size: 2.8rem;
+  color: #1e3a8a;
+}
+
+.map-header p {
+  color: #475569;
+  margin-bottom: 2rem;
+}
+
+.map-container {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  background: #cbd5e1;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.map-grid {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.map-marker {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.marker-dot {
+  width: 18px;
+  height: 18px;
+  background: #2563eb;
+  border-radius: 50%;
+  animation: ping 1.5s infinite;
+}
+
+.marker-label {
+  margin-top: 6px;
+  font-size: 0.75rem;
+  color: #1e3a8a;
+}
+
+@keyframes ping {
+  0% { transform: scale(1); opacity: 1; }
+  75% { transform: scale(2); opacity: 0; }
+  100% { transform: scale(1); opacity: 0; }
+}

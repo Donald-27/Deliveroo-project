@@ -1,0 +1,105 @@
+.footer {
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  padding: 60px 40px;
+  color: #f0f0f0;
+  font-family: 'Manrope', sans-serif;
+  border-top: 2px solid #262626;
+}
+
+.footer-container {
+  max-width: 1280px;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.footer-brand {
+  max-width: 300px;
+}
+
+.footer-logo {
+  height: 60px;
+  margin-bottom: 15px;
+  filter: drop-shadow(0 0 8px #00ffe1);
+}
+
+.footer-brand h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.6rem;
+  margin-bottom: 8px;
+}
+
+.footer-brand p {
+  font-size: 0.95rem;
+  color: #cccccc;
+}
+
+.footer-links {
+  display: flex;
+  gap: 40px;
+}
+
+.footer-links h4 {
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 8px;
+}
+
+.footer-links a {
+  color: #dddddd;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #00ffe1;
+}
+
+.footer-subscribe h4 {
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+}
+
+.footer-subscribe input {
+  padding: 10px 14px;
+  width: 250px;
+  background: #0f0f0f;
+  border: 1px solid #444;
+  color: white;
+  outline: none;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+.footer-subscribe button {
+  padding: 10px 20px;
+  background: #00ffe1;
+  color: black;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Orbitron', sans-serif;
+  transition: background 0.3s ease;
+}
+
+.footer-subscribe button:hover {
+  background: #00ccba;
+}
+
+.footer-copy {
+  font-size: 0.8rem;
+  color: #777;
+  margin-top: 20px;
+}

@@ -1,15 +1,20 @@
-def smart_assign(parcels, couriers):
-    assigned = []
-    unassigned = parcels.copy()
+def assign_courier(pickup_address, delivery_address):
+    """
+    Dummy courier assignment logic based on delivery address region.
+    Returns courier_id or None.
+    """
+
+    address = delivery_address.lower()
+
+    couriers = [
+        {"id": 1, "region": "nairobi"},
+        {"id": 2, "region": "mombasa"},
+        {"id": 3, "region": "kisumu"}
+    ]
 
     for courier in couriers:
-        for parcel in unassigned:
-            if courier['region'] == parcel['destination_region']:
-                assigned.append({
-                    "courier_id": courier['id'],
-                    "parcel_id": parcel['id']
-                })
-                unassigned.remove(parcel)
-                break
+        if courier['region'] in address:
+            return courier['id']
 
-    return {"assigned": assigned, "unassigned": [p['id'] for p in unassigned]}
+
+    return None
