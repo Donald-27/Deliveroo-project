@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Header.css';
 
 const Header = () => {
@@ -12,6 +12,7 @@ const Header = () => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState('');
   const [stats, setStats] = useState({ total: 0, inTransit: 0, delivered: 0, pending: 0 });
+  const navigate = useNavigate();
 
   useEffect(() => {
     const interval = setInterval(() => setTime(new Date()), 1000);
@@ -32,58 +33,42 @@ const Header = () => {
         console.error('Error fetching stats:', err);
       }
     };
-
     fetchStats();
   }, []);
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   const handleInputChange = (e) => {
-    setAuthData({ ...authData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setAuthData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleLogin = async (e) => {
+  const handleAuth = async (e, isLogin) => {
     e.preventDefault();
     setError('');
+    const endpoint = isLogin ? 'login' : 'register';
+    const payload = isLogin ? {
+      email: authData.email,
+      password: authData.password,
+    } : authData;
+
     try {
-      const res = await fetch('http://localhost:5000/api/auth/login', {
+      const res = await fetch(`http://localhost:5000/api/auth/${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: authData.email, password: authData.password }),
+        body: JSON.stringify(payload),
       });
+
       const data = await res.json();
       if (res.ok) {
         localStorage.setItem('token', data.token);
         setUser(data.user);
         setIsAuthenticated(true);
         setShowLogin(false);
-        setAuthData({ email: '', password: '', name: '' });
-      } else {
-        setError(data.message || 'Login failed');
-      }
-    } catch (err) {
-      setError('Network error');
-    }
-  };
-
-  const handleSignup = async (e) => {
-    e.preventDefault();
-    setError('');
-    try {
-      const res = await fetch('http://localhost:5000/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(authData),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        localStorage.setItem('token', data.token);
-        setUser(data.user);
-        setIsAuthenticated(true);
         setShowSignup(false);
-        setAuthData({ email: '', password: '', name: '' });
+        setAuthData({ email: '', password: '', full_name: '' });
       } else {
-        setError(data.message || 'Signup failed');
+        setError(data.message || `${isLogin ? 'Login' : 'Signup'} failed`);
       }
     } catch (err) {
       setError('Network error');
@@ -96,11 +81,16 @@ const Header = () => {
     setUser(null);
   };
 
-  const blurBackground = showLogin || showSignup ? 'blurred-bg' : '';
+  const handleRestrictedClick = (e) => {
+    if (!isAuthenticated) {
+      e.preventDefault();
+      alert('Please log in or sign up to access this feature.');
+    }
+  };
 
   return (
     <>
-      <header className={`deliveroo-header-v2 ${blurBackground}`}>
+      <header className={`deliveroo-header-v2 ${showLogin || showSignup ? 'blurred-bg' : ''}`}>
         <div className="top-bar">
           <div className="logo-area">
             <div className="main-logo">🚚 Deliveroo</div>
@@ -114,8 +104,7 @@ const Header = () => {
             </div>
 
             <div className="notifications">
-              <span className="dot" />
-              🔔
+              <span className="dot" />🔔
             </div>
 
             {isAuthenticated ? (
@@ -140,29 +129,17 @@ const Header = () => {
 
         <nav className={`main-nav ${menuOpen ? 'show' : ''}`}>
           <Link to="/">🏠 Home</Link>
-          <Link to="/book">📦 Book Delivery</Link>
-          <Link to="/track">🛰️ Track Parcel</Link>
-          <Link to="/smart-assign">🤖 Smart Assign</Link>
-          <Link to="/dashboard">📊 Dashboard</Link>
+          <Link to="/book" onClick={handleRestrictedClick}>📦 Book Delivery</Link>
+          <Link to="/track" onClick={handleRestrictedClick}>🛰️ Track Parcel</Link>
+          <Link to="/smart-assign" onClick={handleRestrictedClick}>🤖 Smart Assign</Link>
+          <Link to="/dashboard" onClick={handleRestrictedClick}>📊 Dashboard</Link>
         </nav>
 
         <div className="stats-banner">
-          <div className="stat-item">
-            <span className="label">Parcels Today</span>
-            <span className="value">{stats.total}</span>
-          </div>
-          <div className="stat-item">
-            <span className="label">In Transit</span>
-            <span className="value">{stats.inTransit}</span>
-          </div>
-          <div className="stat-item">
-            <span className="label">Delivered</span>
-            <span className="value">{stats.delivered}</span>
-          </div>
-          <div className="stat-item">
-            <span className="label">Pending</span>
-            <span className="value">{stats.pending}</span>
-          </div>
+          <div className="stat-item"><span className="label">Parcels Today</span><span className="value">{stats.total}</span></div>
+          <div className="stat-item"><span className="label">In Transit</span><span className="value">{stats.inTransit}</span></div>
+          <div className="stat-item"><span className="label">Delivered</span><span className="value">{stats.delivered}</span></div>
+          <div className="stat-item"><span className="label">Pending</span><span className="value">{stats.pending}</span></div>
         </div>
       </header>
 
@@ -170,7 +147,7 @@ const Header = () => {
         <div className="auth-modal">
           <div className="auth-form">
             <h2>{showLogin ? 'Login' : 'Sign Up'}</h2>
-            <form onSubmit={showLogin ? handleLogin : handleSignup}>
+            <form onSubmit={(e) => handleAuth(e, showLogin)}>
               {!showLogin && (
                 <input
                   type="text"

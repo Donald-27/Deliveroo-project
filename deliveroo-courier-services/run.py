@@ -9,7 +9,8 @@ from routes.utility_routes import utility_bp
 from flask_cors import CORS
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, instance_relative_config=True)
+
     app.config.from_object(Config)
 
     db.init_app(app)

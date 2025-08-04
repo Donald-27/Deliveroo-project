@@ -143,7 +143,7 @@ const Home = () => {
       <div className="courier-badges">
         <span className="badge green">98.7% On-Time Rate</span>
         <span className="badge blue">4.9★ Customer Rating</span>
-        <span className="badge yellow">1,240 Deliveries</span>
+        <span className="badge yellow">122 Deliveries</span>
       </div>
 
       <div className="courier-stats">
