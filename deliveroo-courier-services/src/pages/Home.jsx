@@ -137,7 +137,7 @@ const Home = () => {
   <div className="courier-card">
     <img src="/images/courier-of-month.jpg" alt="Top Courier" className="courier-image" />
     <div className="courier-info">
-      <h3>James Otieno</h3>
+      <h3>Jerop A</h3>
       <p className="courier-quote">"Every parcel matters. I treat every delivery like it's my own."</p>
 
       <div className="courier-badges">
